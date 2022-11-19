@@ -1,7 +1,5 @@
 PROTO_DIR=./proto
-PROTO_FILES=$(wildcard $(PROTO_DIR)/*.proto)
-# PROTO_GET_OUTPUT=./gen
-PLATFORM = $(shell uname -m)
+# PLATFORM = $(shell uname -m)
 
 .PHONY: protoc
 protoc: # Generate protobuf files
@@ -16,6 +14,6 @@ install-validator: # Install protoc-gen-validate
 	@echo "Installing protoc-gen-validate v$(VALIDATOR_VERSION)"
 	@go get github.com/envoyproxy/protoc-gen-validate
 	@go install github.com/envoyproxy/protoc-gen-validate
-	@mkdir -p ./proto/validate
-	@cp $(GOPATH)/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v$(VALIDATOR_VERSION)/validate/validate.proto ./proto/validate/validate.proto
+	@mkdir -p ./$(PROTO_DIR)/validate
+	@cp $(GOPATH)/pkg/mod/github.com/envoyproxy/protoc-gen-validate@v$(VALIDATOR_VERSION)/validate/validate.proto ./$(PROTO_DIR)/validate/validate.proto
 	@echo "Done"
