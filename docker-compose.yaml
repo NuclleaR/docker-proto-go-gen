@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  protoc:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      args:
+        GO_VERSION: 1.19
+        PROTOC_GEN_GO: 1.28.1
+        PROTOC_GEN_GO_GRPC: 1.2
+        PROTOC_GEN_VALIDATE: 0.9.0
+    environment:
+      - MODULE_PREFIX=r-booker/auth
+    volumes:
+      - ./proto:/go/proto
+      - .:/go/genproto
+    command:
+      - bash
+      - -c
+      - |
+        protoc -I proto-common:proto $f proto/auth.proto --go_out=/go/genproto --go-grpc_out=/go/genproto --validate_out=lang=go:/go/genproto
